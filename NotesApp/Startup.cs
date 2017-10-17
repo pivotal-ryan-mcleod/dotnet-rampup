@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NotesApp.Models;
 using NotesApp.Repositories;
+using Steeltoe.CloudFoundry.Connector.MySql.EFCore;
 using Steeltoe.Extensions.Configuration;
 
 namespace NotesApp
@@ -36,11 +37,7 @@ namespace NotesApp
                 }
                 else
                 {
-                    var hostname = $@"{Configuration["vcap:services:p-mysql:0:credentials:hostname"]}";
-                    var name     = $@"{Configuration["vcap:services:p-mysql:0:credentials:name"]}";
-                    var username = $@"{Configuration["vcap:services:p-mysql:0:credentials:username"]}";
-                    var password = $@"{Configuration["vcap:services:p-mysql:0:credentials:password"]}";
-                    opt.UseMySql($@"Server={hostname};database={name};uid={username};pwd={password};");
+                    opt.UseMySql(Configuration);
                 }
             });
 
